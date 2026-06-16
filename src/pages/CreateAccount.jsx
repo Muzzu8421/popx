@@ -1,176 +1,189 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateAccount() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    fullName:   '',
-    phone:      '',
-    email:      '',
-    password:   '',
-    company:    '',
-    isAgency:   'yes',
-  })
+    fullName: "",
+    phone: "",
+    email: "",
+    password: "",
+    company: "",
+    isAgency: "yes",
+  });
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
 
   const update = (key, val) => {
-    setForm(prev => ({ ...prev, [key]: val }))
-    if (errors[key]) setErrors(prev => ({ ...prev, [key]: '' }))
-  }
+    setForm((prev) => ({ ...prev, [key]: val }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: "" }));
+  };
 
   const validate = () => {
-    const e = {}
-    if (!form.fullName.trim())  e.fullName = 'Full name is required'
-    if (!form.phone.trim())     e.phone    = 'Phone number is required'
-    if (!form.email.trim())     e.email    = 'Email address is required'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email'
-    if (!form.password.trim())  e.password = 'Password is required'
-    else if (form.password.length < 6) e.password = 'Minimum 6 characters'
-    return e
-  }
+    const e = {};
+    if (!form.fullName.trim()) e.fullName = "Full name is required";
+
+    if (!form.phone.trim()) e.phone = "Phone number is required";
+    else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone))
+      e.phone = "Enter a valid phone number (digits only)";
+
+    if (!form.email.trim()) e.email = "Email address is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email";
+    if (!form.password.trim()) e.password = "Password is required";
+    else if (form.password.length < 6) e.password = "Minimum 6 characters";
+    return e;
+  };
 
   const handleSubmit = () => {
-    const e = validate()
-    if (Object.keys(e).length) { setErrors(e); return }
-    navigate('/profile', { state: { user: form } })
-  }
+    const e = validate();
+    if (Object.keys(e).length) {
+      setErrors(e);
+      return;
+    }
+    navigate("/profile", { state: { user: form } });
+  };
 
   return (
-    <div className="w-full min-h-[844px] bg-white flex flex-col">
-
-      {/* Header */}
-      <div className="px-6 pt-10 pb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1 text-popx-purple text-sm font-medium mb-6 hover:opacity-70 transition-opacity"
-          aria-label="Go back"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Back
-        </button>
-
-        <h1 className="text-[22px] font-bold text-popx-dark leading-snug">
-          Create your<br />
-          <span className="text-popx-purple">PopX</span> account
+    <div className="w-[375px] min-h-[700px] bg-[#F7F8F9] flex flex-col">
+      {/* Scrollable form area */}
+      <div className="flex-1 px-5 pt-11 pb-6 flex flex-col gap-5 overflow-y-auto">
+        {/* Title */}
+        <h1 className="text-[28px] font-bold text-[#1D2226] leading-tight mb-1">
+          Create your
+          <br />
+          PopX account
         </h1>
-      </div>
-
-      {/* Form */}
-      <div className="flex-1 px-6 pb-10 flex flex-col gap-5 overflow-y-auto">
 
         {/* Full Name */}
-        <Field label="Full Name *" error={errors.fullName}>
+        <FloatField label="Full Name*" error={errors.fullName}>
           <input
-            className="input-field"
             type="text"
             placeholder="Marry Doe"
             value={form.fullName}
-            onChange={e => update('fullName', e.target.value)}
+            onChange={(e) => update("fullName", e.target.value)}
+            className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
           />
-        </Field>
+        </FloatField>
 
         {/* Phone */}
-        <Field label="Phone number *" error={errors.phone}>
+        <FloatField label="Phone number*" error={errors.phone}>
           <input
-            className="input-field"
             type="tel"
-            placeholder="+91 98765 43210"
+            placeholder="Marry Doe"
             value={form.phone}
-            onChange={e => update('phone', e.target.value)}
+            onKeyDown={(e) => {
+              // Allow: backspace, delete, tab, arrows, home, end
+              const allowed = [
+                "Backspace",
+                "Delete",
+                "Tab",
+                "ArrowLeft",
+                "ArrowRight",
+                "Home",
+                "End",
+              ];
+              // Allow: digits, +, space, -, (, )
+              if (!allowed.includes(e.key) && !/[\d+\s\-()]/.test(e.key)) {
+                e.preventDefault();
+              }
+            }}
+            onChange={(e) => update("phone", e.target.value)}
+            className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
           />
-        </Field>
+        </FloatField>
 
         {/* Email */}
-        <Field label="Email address *" error={errors.email}>
+        <FloatField label="Email address*" error={errors.email}>
           <input
-            className="input-field"
             type="email"
-            placeholder="you@example.com"
+            placeholder="Marry Doe"
             value={form.email}
-            onChange={e => update('email', e.target.value)}
+            onChange={(e) => update("email", e.target.value)}
+            className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
           />
-        </Field>
+        </FloatField>
 
         {/* Password */}
-        <Field label="Password *" error={errors.password}>
+        <FloatField label="Password*" error={errors.password}>
           <input
-            className="input-field"
             type="password"
-            placeholder="Min. 6 characters"
+            placeholder="Marry Doe"
             value={form.password}
-            onChange={e => update('password', e.target.value)}
+            onChange={(e) => update("password", e.target.value)}
+            className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
           />
-        </Field>
+        </FloatField>
 
         {/* Company */}
-        <Field label="Company name">
+        <FloatField label="Company name">
           <input
-            className="input-field"
             type="text"
-            placeholder="Your company (optional)"
+            placeholder="Marry Doe"
             value={form.company}
-            onChange={e => update('company', e.target.value)}
+            onChange={(e) => update("company", e.target.value)}
+            className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
           />
-        </Field>
+        </FloatField>
 
-        {/* Agency radio */}
+        {/* Agency Radio */}
         <div>
-          <span className="field-label">Are you an Agency? *</span>
-          <div className="flex gap-6 mt-2">
-            {['yes', 'no'].map(opt => (
-              <label key={opt} className="flex items-center gap-2 cursor-pointer">
+          <span className="text-[12px] font-semibold text-[#6C25FF]">
+            Are you an Agency?*
+          </span>
+          <div className="flex gap-8 mt-2">
+            {["yes", "no"].map((opt) => (
+              <label
+                key={opt}
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => update("isAgency", opt)}
+              >
                 <span
-                  className={`
-                    w-5 h-5 rounded-full border-2 flex items-center justify-center
-                    transition-colors duration-200
-                    ${form.isAgency === opt
-                      ? 'border-popx-purple'
-                      : 'border-popx-grey-light'}
-                  `}
-                  onClick={() => update('isAgency', opt)}
+                  className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center transition-colors ${
+                    form.isAgency === opt
+                      ? "border-[#6C25FF]"
+                      : "border-[#CBCBCB]"
+                  }`}
                 >
                   {form.isAgency === opt && (
-                    <span className="w-2.5 h-2.5 rounded-full bg-popx-purple" />
+                    <span className="w-[9px] h-[9px] rounded-full bg-[#6C25FF]" />
                   )}
                 </span>
-                <span className="text-sm text-popx-dark capitalize">{opt}</span>
+                <span className="text-[14px] text-[#1D2226] capitalize">
+                  {opt === "yes" ? "Yes" : "No"}
+                </span>
               </label>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Submit */}
-        <button className="btn-primary mt-2" onClick={handleSubmit}>
+      {/* Create Account Button — pinned at bottom */}
+      <div className="px-5 pb-8">
+        <button
+          onClick={handleSubmit}
+          className="w-full h-[46px] bg-[#6C25FF] text-white text-[16px] font-medium rounded-[6px]"
+        >
           Create Account
         </button>
-
-        <p className="text-center text-xs text-popx-grey-light mt-1">
-          Already have an account?{' '}
-          <button
-            className="text-popx-purple font-medium hover:underline"
-            onClick={() => navigate('/login')}
-          >
-            Login
-          </button>
-        </p>
       </div>
     </div>
-  )
+  );
 }
 
-/* ── Reusable field wrapper ── */
-function Field({ label, error, children }) {
+/* ── Floating label field wrapper ── */
+function FloatField({ label, error, children }) {
   return (
-    <div className="flex flex-col gap-1">
-      <label className="field-label">{label}</label>
-      {children}
+    <div>
+      <div className="relative border border-[#CBCBCB] rounded-[6px] bg-white px-3 pt-[10px] pb-[10px]">
+        <label className="absolute -top-[9px] left-3 bg-white px-1 text-[11px] font-semibold text-[#6C25FF]">
+          {label}
+        </label>
+        {children}
+      </div>
       {error && (
-        <span className="text-red-500 text-xs mt-0.5">{error}</span>
+        <span className="text-red-500 text-xs mt-1 block">{error}</span>
       )}
     </div>
-  )
+  );
 }

@@ -4,10 +4,10 @@ export default function LandingScreen() {
   const navigate = useNavigate()
 
   return (
-    <div className="w-[375px] h-[750px] bg-[#F7F8F9] flex flex-col overflow-hidden">
+    <div className="w-[375px] h-[700px] shadow-xl bg-[#F7F8F9] flex flex-col overflow-hidden justify-end">
 
       {/* Bottom white card */}
-      <div className="flex flex-col justify-start items-center">
+      <div className="flex flex-col pb-7 px-5">
 
         <h1 className="text-[28px] font-medium text-[#1D2226] leading-tight">
           Welcome to PopX

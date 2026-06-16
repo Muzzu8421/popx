@@ -10,7 +10,7 @@
   }
   body {
     font-family: 'Rubik', sans-serif;
-    background-color: #f0eefc;
+    background-color: #e8f2fc;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -22,24 +22,5 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-  }
-}
-
-@layer components {
-  .phone-shell {
-  width: 375px;
-  height: 812px;
-  background: #ffffff;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(108, 37, 255, 0.15);
-}
-}
-
-@media (max-width: 430px) {
-  .phone-shell {
-    width: 100vw;
-    min-height: 100vh;
-    box-shadow: none;
   }
 }

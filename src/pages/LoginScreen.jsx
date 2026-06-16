@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function LoginScreen() {
   const navigate = useNavigate()
-
-  const [form,   setForm]   = useState({ email: '', password: '' })
+  const [form, setForm] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
 
   const update = (key, val) => {
@@ -14,7 +13,7 @@ export default function LoginScreen() {
 
   const validate = () => {
     const e = {}
-    if (!form.email.trim())    e.email    = 'Email is required'
+    if (!form.email.trim()) e.email = 'Email is required'
     else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email'
     if (!form.password.trim()) e.password = 'Password is required'
     return e
@@ -29,80 +28,66 @@ export default function LoginScreen() {
   }
 
   return (
-    <div className="w-full min-h-[844px] bg-white flex flex-col">
+    <div className="w-[375px] min-h-[700px] bg-[#F7F8F9] flex flex-col">
 
       {/* Header */}
-      <div className="px-6 pt-10 pb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1 text-popx-purple text-sm font-medium mb-6 hover:opacity-70 transition-opacity"
-          aria-label="Go back"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Back
-        </button>
-
-        <h1 className="text-[22px] font-bold text-popx-dark leading-snug">
-          Signin to your<br />
-          <span className="text-popx-purple">PopX</span> account
+      <div className="px-5 pt-11 pb-2">
+        <h1 className="text-[28px] font-medium text-[#1D2226] leading-tight">
+          Signin to your<br />PopX account
         </h1>
-        <p className="mt-2 text-sm text-popx-grey leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <p className="mt-3 text-[18px] text-[#1D2226] opacity-60 leading-snug">
+          Lorem ipsum dolor sit amet,<br />consectetur adipiscing elit,
         </p>
       </div>
 
       {/* Form */}
-      <div className="flex-1 px-6 pb-10 flex flex-col gap-5">
+      <div className="px-5 pt-8 flex flex-col gap-5">
 
         {/* Email */}
         <div>
-          <label className="field-label">Email address</label>
-          <input
-            className="input-field"
-            type="email"
-            placeholder="you@example.com"
-            value={form.email}
-            onChange={e => update('email', e.target.value)}
-          />
-          {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>}
+          <div className="relative border border-[#CBCBCB] rounded-[6px] bg-white px-3 pt-[10px] pb-[10px]">
+            <label className="absolute -top-[9px] left-3 bg-white px-1 text-[11px] font-semibold text-[#6C25FF]">
+              Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="Enter email address"
+              value={form.email}
+              onChange={e => update('email', e.target.value)}
+              className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
+            />
+          </div>
+          {errors.email && (
+            <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>
+          )}
         </div>
 
         {/* Password */}
         <div>
-          <label className="field-label">Password</label>
-          <input
-            className="input-field"
-            type="password"
-            placeholder="Enter your password"
-            value={form.password}
-            onChange={e => update('password', e.target.value)}
-          />
-          {errors.password && <span className="text-red-500 text-xs mt-1 block">{errors.password}</span>}
+          <div className="relative border border-[#CBCBCB] rounded-[6px] bg-white px-3 pt-[10px] pb-[10px]">
+            <label className="absolute -top-[9px] left-3 bg-white px-1 text-[11px] font-semibold text-[#6C25FF]">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={form.password}
+              onChange={e => update('password', e.target.value)}
+              className="w-full text-[14px] text-[#1D2226] placeholder-[#CBCBCB] bg-transparent outline-none"
+            />
+          </div>
+          {errors.password && (
+            <span className="text-red-500 text-xs mt-1 block">{errors.password}</span>
+          )}
         </div>
 
-        {/* Forgot */}
-        <div className="flex justify-end -mt-2">
-          <button className="text-xs text-popx-purple font-medium hover:underline">
-            Forgot password?
-          </button>
-        </div>
-
-        {/* Login */}
-        <button className="btn-primary mt-1" onClick={handleLogin}>
+        {/* Login Button */}
+        <button
+          onClick={handleLogin}
+          className="w-full h-[46px] bg-[#C4C4C4] text-white text-[16px] font-medium rounded-[6px] mt-1"
+        >
           Login
         </button>
-
-        <p className="text-center text-xs text-popx-grey-light">
-          Don't have an account?{' '}
-          <button
-            className="text-popx-purple font-medium hover:underline"
-            onClick={() => navigate('/create-account')}
-          >
-            Create Account
-          </button>
-        </p>
       </div>
     </div>
   )

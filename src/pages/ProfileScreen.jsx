@@ -1,109 +1,73 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
-/* Demo fallback data */
 const DEFAULT_USER = {
-  fullName: 'Marry Doe',
-  email:    'marrie98@gmail.com',
-  phone:    '+91 98765 43210',
-  company:  'Angelina',
-  isAgency: 'yes',
-}
+  fullName: "Marry Doe",
+  email: "Marry@Gmail.Com",
+};
 
 export default function ProfileScreen() {
-  const { state }  = useLocation()
-  const navigate   = useNavigate()
-  const user       = state?.user ?? DEFAULT_USER
+  const { state } = useLocation();
+  const user = state?.user ?? DEFAULT_USER;
 
-  const rows = [
-    { label: 'Full name',     value: user.fullName  || DEFAULT_USER.fullName  },
-    { label: 'Email address', value: user.email     || DEFAULT_USER.email     },
-    { label: 'Phone number',  value: user.phone     || DEFAULT_USER.phone     },
-    { label: 'Company name',  value: user.company   || DEFAULT_USER.company   },
-    { label: 'Agency',        value: user.isAgency  ? (user.isAgency === 'yes' ? 'Yes' : 'No') : 'Yes' },
-  ]
+  const fullName = user.fullName || DEFAULT_USER.fullName;
+  const email = user.email || DEFAULT_USER.email;
 
   return (
-    <div className="w-full min-h-[844px] bg-white flex flex-col">
-
-      {/* ── Top header ── */}
-      <div
-        className="relative w-full px-5 pt-10 pb-6 flex items-center justify-between"
-        style={{ borderBottom: '1px solid #F0EEFF' }}
-      >
-        <button
-          onClick={() => navigate(-1)}
-          className="text-popx-purple hover:opacity-70 transition-opacity"
-          aria-label="Go back"
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
-
-        <h2 className="text-base font-semibold text-popx-dark absolute left-1/2 -translate-x-1/2">
+    <div className="w-[375px] min-h-[700px] bg-[#F7F8F9]  flex flex-col">
+      {/* ── Header ── */}
+      <div className="px-5 pt-6 pb-6 flex items-center border-b bg-[#FFFFFF] border-[#EBEBEB]">
+        <h2 className="text-[18px] font-normal text-[#1D2226]">
           Account Settings
         </h2>
-
-        {/* Logout */}
-        <button
-          onClick={() => navigate('/')}
-          className="text-xs text-red-400 font-medium hover:text-red-600 transition-colors"
-        >
-          Logout
-        </button>
       </div>
 
-      {/* ── Avatar section ── */}
-      <div className="flex items-center gap-4 px-5 py-6" style={{ borderBottom: '1px solid #F0EEFF' }}>
+      {/* ── Avatar + name + email ── */}
+      <div className="flex items-center bg-[#F7F8F9] gap-4 px-5 py-3">
         {/* Avatar with camera badge */}
         <div className="relative flex-shrink-0">
-          <div
-            className="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-popx-purple to-popx-bubble3 flex items-center justify-center text-white text-2xl font-bold select-none"
-          >
-            {(user.fullName || DEFAULT_USER.fullName).charAt(0).toUpperCase()}
-          </div>
-
-          {/* Camera icon badge */}
+          <img
+            src="/Ellipse114.png"
+            alt={fullName}
+            className="w-[72px] h-[72px] rounded-full object-cover"
+          />
+          {/* Camera badge */}
           <button
-            className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-popx-purple flex items-center justify-center shadow"
+            className="absolute -bottom-1 -right-1 w-[24px] h-[24px] rounded-full bg-[#6C25FF] flex items-center justify-center shadow"
             aria-label="Change profile photo"
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-              <circle cx="12" cy="13" r="4" fill="none" stroke="white" strokeWidth="2"/>
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 15.2C13.7673 15.2 15.2 13.7673 15.2 12C15.2 10.2327 13.7673 8.8 12 8.8C10.2327 8.8 8.8 10.2327 8.8 12C8.8 13.7673 10.2327 15.2 12 15.2Z" />
+              <path d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" />
             </svg>
           </button>
         </div>
 
-        {/* Name + company */}
+        {/* Name & email */}
         <div>
-          <p className="text-base font-semibold text-popx-dark">
-            {user.fullName || DEFAULT_USER.fullName}
-          </p>
-          <p className="text-sm text-popx-grey">
-            {user.email || DEFAULT_USER.email}
+          <p className="text-[15px] font-medium text-[#1D2226]">{fullName}</p>
+          <p className="text-[14px] text-[#1D2226] mt-0.5">
+            {email}
           </p>
         </div>
       </div>
 
-      {/* ── Account details list ── */}
-      <div className="flex-1 px-5 py-4 flex flex-col divide-y divide-[#F0EEFF]">
-        {rows.map(({ label, value }) => (
-          <div key={label} className="py-4">
-            <p className="text-xs font-medium text-popx-purple mb-0.5">{label}</p>
-            <p className="text-sm text-popx-dark font-medium">{value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ── Bottom bio paragraph (like the XD "about" section) ── */}
-      <div className="px-5 pb-10 pt-2">
-        <p className="text-xs text-popx-grey leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation.
+      {/* ── Bio paragraph ── */}
+      <div className="px-5 py-5 border-b border-dashed border-[#CBCBCB]">
+        <p className="text-[14px] text-[#1D2226] font-normal leading-relaxed">
+          Lorem Ipsum Dolor Sit Amet, Consetetur Sadipscing Elitr, Sed Diam
+          Nonumy Eirmod Tempor Invidunt Ut Labore Et Dolore Magna Aliquyam Erat,
+          Sed Diam
         </p>
       </div>
+
+      {/* ── Empty rest of screen ── */}
+      <div className="flex-1" />
     </div>
-  )
+  );
 }
