@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0eefc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #root {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Mobile shell — centers the 390px app on any screen */
+  .phone-shell {
+    width: 390px;
+    min-height: 844px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(108, 37, 255, 0.15);
+    border-radius: 2px;
+  }
+
+  /* Primary purple button */
+  .btn-primary {
+    @apply w-full py-4 rounded-lg text-white font-semibold text-base
+           bg-popx-purple hover:bg-[#5A1EE0] active:scale-[0.98]
+           transition-all duration-200 shadow-md;
+  }
+
+  /* Light purple / ghost button */
+  .btn-secondary {
+    @apply w-full py-4 rounded-lg text-popx-dark font-semibold text-base
+           bg-popx-lavender hover:bg-popx-purple-light active:scale-[0.98]
+           transition-all duration-200;
+  }
+
+  /* Text input field */
+  .input-field {
+    @apply w-full border border-popx-purple-light rounded-lg px-4 py-3
+           text-sm text-popx-dark placeholder-popx-grey-light
+           focus:outline-none focus:ring-2 focus:ring-popx-purple focus:border-transparent
+           transition-all duration-200;
+  }
+
+  /* Floating label wrapper */
+  .field-label {
+    @apply block text-xs font-medium text-popx-purple mb-1;
+  }
+}
+
+/* Responsive: on real mobile, fill the full screen */
+@media (max-width: 430px) {
+  .phone-shell {
+    width: 100vw;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
